@@ -1,3 +1,5 @@
+FROM composer:1.10.8 as composer
+
 FROM ubuntu:xenial
 LABEL maintainer="uberbrady, hinchk"
 
@@ -22,6 +24,7 @@ vim \
 git \
 mysql-client \
 supervisor \
+unzip \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -64,20 +67,12 @@ COPY docker/docker.env /var/www/html/.env
 
 RUN chown -R docker /var/www/html
 
-RUN \
-	rm -r "/var/www/html/storage/private_uploads" && ln -fs "/var/lib/snipeit/data/private_uploads" "/var/www/html/storage/private_uploads" \
-      && rm -rf "/var/www/html/public/uploads" && ln -fs "/var/lib/snipeit/data/uploads" "/var/www/html/public/uploads" \
-      && rm -r "/var/www/html/storage/app/backups" && ln -fs "/var/lib/snipeit/dumps" "/var/www/html/storage/app/backups" \
-      && mkdir "/var/lib/snipeit/keys" && ln -fs "/var/lib/snipeit/keys/oauth-private.key" "/var/www/html/storage/oauth-private.key" \
-      && ln -fs "/var/lib/snipeit/keys/oauth-public.key" "/var/www/html/storage/oauth-public.key" \
-      && chown docker "/var/lib/snipeit/keys/" \
-      && chmod +x /var/www/html/artisan \
-      && echo "Finished setting up application in /var/www/html"
+RUN chmod +x /var/www/html/artisan
 
 ############## DEPENDENCIES via COMPOSER ###################
 
 #global install of composer
-RUN cd /tmp;curl -sS https://getcomposer.org/installer | php;mv /tmp/composer.phar /usr/local/bin/composer
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 # Get dependencies
 USER docker
@@ -95,7 +90,7 @@ USER root
 
 ############### DATA VOLUME #################
 
-VOLUME ["/var/lib/snipeit"]
+VOLUME ["/var/www/html/storage"]
 
 ##### START SERVER
 

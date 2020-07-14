@@ -73,10 +73,26 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key'    => env('AWS_KEY', null),
-            'secret' => env('AWS_SECRET', null),
-            'region' => env('AWS_REGION', null),
-            'bucket' => env('AWS_BUCKET', null),
+            'key'    => env('AWS_KEY'),
+            'secret' => env('AWS_SECRET'),
+            'region' => env('AWS_REGION'),
+            'bucket' => env('AWS_BUCKET'),
+            'root'   => env('AWS_PREFIX'),
+            'endpoint' => env('AWS_URL'),
+            'bucket_endpoint' => false,
+            'use_path_style_endpoint' => true,
+        ],
+
+        'backups' => [
+            'driver' => 's3',
+            'key'    => env('BACKUPS_AWS_KEY'),
+            'secret' => env('BACKUPS_AWS_SECRET'),
+            'region' => env('BACKUPS_AWS_REGION'),
+            'bucket' => env('BACKUPS_AWS_BUCKET'),
+            'root'   => env('BACKUPS_AWS_PREFIX'),
+            'endpoint' => env('BACKUPS_AWS_URL'),
+            'bucket_endpoint' => false,
+            'use_path_style_endpoint' => true,
         ],
 
         'rackspace' => [

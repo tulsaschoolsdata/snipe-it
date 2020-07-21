@@ -39,12 +39,17 @@
                                 <div class="col-md-12">
                                     <!-- CSRF Token -->
 
+                                    <fieldset>
+                                        <p><a href="/login/graph" class="btn btn-lg btn-primary btn-block">Login with Microsoft</a></p>
+                                    </fieldset>
+
+                                    <p class="text-center">- or -</p>
 
                                     <fieldset>
 
                                         <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                                             <label for="username">{{ trans('admin/users/table.username')  }}</label>
-                                            <input class="form-control" placeholder="{{ trans('admin/users/table.username')  }}" name="username" type="text" id="username" autocomplete="off" autofocus>
+                                            <input class="form-control" placeholder="{{ trans('admin/users/table.username')  }}" name="username" type="text" id="username" autocomplete="off">
                                             {!! $errors->first('username', '<span class="alert-msg" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i> :message</span>') !!}
                                         </div>
                                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">

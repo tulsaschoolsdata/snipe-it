@@ -36,6 +36,7 @@
                                 <!-- Notifications -->
                                 @include('notifications')
 
+                                @if ($snipeSettings->username_login_enabled)
                                 <div class="col-md-12">
                                     <!-- CSRF Token -->
 
@@ -44,7 +45,7 @@
 
                                         <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                                             <label for="username"><i class="fa fa-user" aria-hidden="true"></i> {{ trans('admin/users/table.username')  }}</label>
-                                            <input class="form-control" placeholder="{{ trans('admin/users/table.username')  }}" name="username" type="text" id="username" autocomplete="off" autofocus>
+                                            <input class="form-control" placeholder="{{ trans('admin/users/table.username')  }}" name="username" type="text" id="username" autocomplete="off">
                                             {!! $errors->first('username', '<span class="alert-msg" aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i> :message</span>') !!}
                                         </div>
                                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
@@ -59,6 +60,7 @@
                                         </div>
                                     </fieldset>
                                 </div> <!-- end col-md-12 -->
+                                @endif
 
                             </div> <!-- end row -->
 
@@ -71,8 +73,14 @@
                             @endif
                         </div>
                         <div class="box-footer">
+                            @if ($snipeSettings->username_login_enabled)
                             <button class="btn btn-lg btn-primary btn-block">{{ trans('auth/general.login')  }}</button>
+                            @endif
+                            @if (!$snipeSettings->graph_login_disabled)
+                            <a href="/login/graph" class="btn btn-lg btn-primary btn-block">Login with Microsoft</a>
+                            @endif
                         </div>
+                        @if ($snipeSettings->username_login_enabled)
                         <div class="col-md-12 col-sm-12 col-xs-12 text-right" style="padding-top: 10px;">
                             @if ($snipeSettings->custom_forgot_pass_url)
                                 <a href="{{ $snipeSettings->custom_forgot_pass_url  }}" rel="noopener">{{ trans('auth/general.forgot_password')  }}</a>
@@ -82,6 +90,7 @@
 
 
                         </div>
+                        @endif
                     </div> <!-- end login box -->
 
                 </div> <!-- col-md-4 -->

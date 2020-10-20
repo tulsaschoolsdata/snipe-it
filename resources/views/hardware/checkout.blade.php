@@ -166,6 +166,7 @@
         //            format: 'yyyy-mm-dd'
         //        });
 
+        $("#checkout_at").val(new Date().toISOString().split('T')[0])
 
     </script>
 @stop

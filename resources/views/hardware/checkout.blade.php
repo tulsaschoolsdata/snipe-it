@@ -156,6 +156,7 @@
         //            format: 'yyyy-mm-dd'
         //        });
 
-
+        $("#checkout_at").val(new Date().toISOString().split('T')[0])
+        $("#expected_checkin").val("2021-06-08");
     </script>
 @stop

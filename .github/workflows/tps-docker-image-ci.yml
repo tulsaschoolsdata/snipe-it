@@ -43,6 +43,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: TPS Version
+        run: |
+          echo "${{ steps.prep.outputs.version }}-${GITHUB_SHA::8}" > version.tps.txt
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 

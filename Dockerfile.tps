@@ -16,3 +16,5 @@ RUN \
     composer require --update-no-dev tulsaschoolsdata/snipe-it-customizations:${TPS_CUSTOMIZATIONS_REF} && \
     ([ -z "${X_COMPOSER_GITHUB_OAUTH}" ] || composer config -g --unset github-oauth.github.com)
 USER root
+
+COPY --chown=docker:root version.tps.txt /var/www/html/version.tps.txt

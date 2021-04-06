@@ -137,7 +137,7 @@ class AssetsController extends Controller
         $asset->supplier_id             = request('supplier_id', 0);
         $asset->requestable             = request('requestable', 0);
         $asset->rtd_location_id         = request('rtd_location_id', null);
-        
+
 
         if ($asset->assigned_to=='') {
             $asset->location_id = $request->input('rtd_location_id', null);
@@ -472,7 +472,13 @@ class AssetsController extends Controller
         if (!$asset = Asset::where('asset_tag', '=', $tag)->first()) {
             return redirect()->route('hardware.index')->with('error', trans('admin/hardware/message.does_not_exist'));
         }
-        $this->authorize('view', $asset);
+
+        try {
+            $this->authorize('view', $asset);
+        } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
+            \Debugbar::info($e);
+            throw($e);
+        }
         return redirect()->route('hardware.show', $asset->id)->with('topsearch', $topsearch);
     }
 

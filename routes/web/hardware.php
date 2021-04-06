@@ -63,14 +63,14 @@ Route::group(
         Route::get('bytag/{any?}',
             [
                 'as'   => 'findbytag/hardware',
-                'uses' => 'AssetsController@getAssetByTag'
+                'uses' => 'TulsaPublicSchools\SnipeItCustomizations\Http\Controllers\AssetsController@getAssetByTag'
             ]
         )->where('any', '.*');
 
         Route::get('byserial/{any?}',
             [
                 'as'   => 'findbyserial/hardware',
-                'uses' => 'AssetsController@getAssetBySerial'
+                'uses' => 'TulsaPublicSchools\SnipeItCustomizations\Http\Controllers\AssetsController@getAssetBySerial'
             ]
         )->where('any', '.*');
 
@@ -102,7 +102,7 @@ Route::group(
         ]);
         Route::get('{assetId}/view', [
             'as' => 'hardware.view',
-            'uses' => 'AssetsController@show'
+            'uses' => 'TulsaPublicSchools\SnipeItCustomizations\Http\Controllers\AssetsController@show'
         ]);
         Route::get('{assetId}/qr_code', [ 'as' => 'qr_code/hardware', 'uses' => 'AssetsController@getQrCode' ]);
         Route::get('{assetId}/barcode', [ 'as' => 'barcode/hardware', 'uses' => 'AssetsController@getBarCode' ]);

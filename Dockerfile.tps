@@ -1,7 +1,7 @@
 FROM snipe/snipe-it:v4.9.5
 
 ARG TPS_CUSTOMIZATIONS_REPO='tulsaschoolsdata/snipe-it-customizations'
-ARG TPS_CUSTOMIZATIONS_REF='dev-master'
+ARG TPS_CUSTOMIZATIONS_REF='v1.0.0'
 ARG X_COMPOSER_GITHUB_OAUTH
 
 # Copy any directories that contain customizations

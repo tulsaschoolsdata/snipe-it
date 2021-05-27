@@ -27,6 +27,15 @@ return array(
         )
     ),
 
+    'Multiple company access' => array(
+        array(
+            'permission' => 'multicompany',
+            'label'      => '',
+            'note'       => 'This will allow users to access for all companies.',
+            'display'    => true,
+        )
+    ),
+
     'CSV Import' => array(
         array(
             'permission' => 'import',

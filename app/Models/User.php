@@ -179,7 +179,30 @@ class User extends SnipeModel implements AuthenticatableContract, AuthorizableCo
     {
         return $this->checkPermissionSection('superuser');
     }
+ 
+    /**
+     * Checks if the user is a Admin
+     *
+     * @author R.Florek
+     * @since [v1.0]
+     * @return boolean
+     */    
+    public function isAdmin()
+    {
+        return $this->hasAccess('admin');
+    }
 
+    /**
+     * Checks if the user is a Admin
+     *
+     * @author R.Florek
+     * @since [v1.0]
+     * @return boolean
+     */    
+    public function isMultiCompany()
+    {
+        return $this->hasAccess('multicompany');
+    }
 
     /**
      * Establishes the user -> company relationship

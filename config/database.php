@@ -90,6 +90,8 @@ return [
 
             'dump_command_timeout' => 60 * 5, // 5 minute timeout
             'dump_using_single_transaction' => true, // perform dump using a single transaction
+
+            'sslmode' => env('DB_SSL_MODE', 'PREFERRED'),
             'options' => (env('DB_SSL')) ? ((env('DB_SSL_IS_PAAS')) ? [
                 PDO::MYSQL_ATTR_SSL_CA                  => env('DB_SSL_CA_PATH'),   // /path/to/ca.pem
             ] : [

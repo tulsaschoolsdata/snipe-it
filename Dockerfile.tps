@@ -7,6 +7,7 @@ ARG APACHE_DOCUMENT_ROOT=/var/www/snipe-it/public
 ARG TPS_CUSTOMIZATIONS_REPO='tulsaschoolsdata/snipe-it-customizations'
 ARG TPS_CUSTOMIZATIONS_REF='5.x-dev'
 ARG X_COMPOSER_GITHUB_OAUTH
+ARG X_AWS_RDS_GLOBAL_BUNDLE_PEM='https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem'
 
 FROM composer:${COMPOSER_VERSION} AS composer
 
@@ -21,12 +22,15 @@ ARG APACHE_DOCUMENT_ROOT
 ENV APACHE_DOCUMENT_ROOT ${APACHE_DOCUMENT_ROOT}
 ARG COMPOSER_ALLOW_SUPERUSER
 ENV COMPOSER_ALLOW_SUPERUSER ${COMPOSER_ALLOW_SUPERUSER}
+ARG X_AWS_RDS_GLOBAL_BUNDLE_PEM
+ENV X_AWS_RDS_GLOBAL_BUNDLE_PEM ${X_AWS_RDS_GLOBAL_BUNDLE_PEM}
 
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf \
   ; sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 ## Snipe-IT System Dependencies
 RUN apt-get update && apt-get install -y \
+        awscli \
         default-mysql-client \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
@@ -42,7 +46,8 @@ RUN apt-get update && apt-get install -y \
         mysqli \
         pdo_mysql \
         zip \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+    && (mkdir -p /etc/ssl/aws/rds && cd /etc/ssl/aws/rds && curl -s -L -O ${X_AWS_RDS_GLOBAL_BUNDLE_PEM})
 
 COPY . /var/www/snipe-it
 WORKDIR /var/www/snipe-it
@@ -69,11 +74,11 @@ ENV COMPOSER_ALLOW_SUPERUSER ${COMPOSER_ALLOW_SUPERUSER}
 ARG PECL_REDIS_VERSION
 ENV PECL_REDIS_VERSION ${PECL_REDIS_VERSION}
 ARG TPS_CUSTOMIZATIONS_REPO
-ENV TPS_CUSTOMIZATIONS_REPO $TPS_CUSTOMIZATIONS_REPO
+ENV TPS_CUSTOMIZATIONS_REPO ${TPS_CUSTOMIZATIONS_REPO}
 ARG TPS_CUSTOMIZATIONS_REF
-ENV TPS_CUSTOMIZATIONS_REF $TPS_CUSTOMIZATIONS_REF
+ENV TPS_CUSTOMIZATIONS_REF ${TPS_CUSTOMIZATIONS_REF}
 ARG X_COMPOSER_GITHUB_OAUT
-ENV X_COMPOSER_GITHUB_OAUT $X_COMPOSER_GITHUB_OAUT
+ENV X_COMPOSER_GITHUB_OAUT ${X_COMPOSER_GITHUB_OAUT}
 
 RUN pecl install \
         redis-${PECL_REDIS_VERSION} \

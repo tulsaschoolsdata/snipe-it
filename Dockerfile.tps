@@ -47,7 +47,8 @@ RUN apt-get update && apt-get install -y \
         pdo_mysql \
         zip \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && (mkdir -p /etc/ssl/aws/rds && cd /etc/ssl/aws/rds && curl -s -L -O ${X_AWS_RDS_GLOBAL_BUNDLE_PEM})
+    && (mkdir -p /etc/ssl/aws/rds && cd /etc/ssl/aws/rds && curl -s -L -O ${X_AWS_RDS_GLOBAL_BUNDLE_PEM}) \
+    && a2enmod rewrite
 
 COPY . /var/www/snipe-it
 WORKDIR /var/www/snipe-it
@@ -87,10 +88,8 @@ RUN pecl install \
     && ([ -z "${X_COMPOSER_GITHUB_OAUTH}" ] || composer config -g github-oauth.github.com "${X_COMPOSER_GITHUB_OAUTH}") \
     && composer config repositories."${TPS_CUSTOMIZATIONS_REPO}" vcs "https://github.com/${TPS_CUSTOMIZATIONS_REPO}" \
     && composer require --update-no-dev \
-        "ext-redis:*" \
         "tulsaschoolsdata/snipe-it-customizations:${TPS_CUSTOMIZATIONS_REF}" \
-    && ([ -z "${X_COMPOSER_GITHUB_OAUTH}" ] || composer config -g --unset github-oauth.github.com) \
-    && a2enmod rewrite
+    && ([ -z "${X_COMPOSER_GITHUB_OAUTH}" ] || composer config -g --unset github-oauth.github.com)
 
 # php default:
 # - JSON PHP Extension

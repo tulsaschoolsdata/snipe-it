@@ -1,0 +1,35 @@
+{
+  "env": {
+    "APP_ENV": {
+      "description": "Snipe-IT APP_ENV",
+      "value": "production"
+    },
+    "APP_DEBUG": {
+      "description": "Snipe-IT APP_DEBUG",
+      "value": "false"
+    },
+    "APP_URL": {
+      "description": "Snipe-IT APP_URL",
+      "value": "null"
+    },
+    "APP_TIMEZONE": {
+      "description": "Snipe-IT APP_TIMEZONE",
+      "value": "America/Chicago"
+    },
+    "APP_LOCALE": {
+      "description": "Snipe-IT APP_LOCALE",
+      "value": "en"
+    }
+  },
+  "environments": {
+    "review": {
+      "APP_ENV": "review",
+      "APP_DEBUG": "true"
+    }
+  },
+  "scripts": {
+    "postdeploy": "make -f .tps/heroku/Makefile postdeploy",
+    "pr-predestroy": "make -f .tps/heroku/Makefile pr-predestroy"
+  },
+  "stack": "container"
+}

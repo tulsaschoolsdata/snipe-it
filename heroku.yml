@@ -1,0 +1,14 @@
+setup:
+  addons:
+    - plan: rediscloud:30
+
+build:
+  docker:
+    web: Dockerfile.tps
+
+run:
+  release:
+    image: web
+    command:
+      - make -f .tps/heroku/Makefile release
+  web: make -f .tps/heroku/Makefile web

@@ -42,17 +42,17 @@ class AssetModelSeeder extends Seeder
 
         $src = public_path('/img/demo/models/');
         $dst = 'models'.'/';
-        $del_files = Storage::files($dst);
+        $del_files = Storage::disk('public')->files($dst);
 
-        foreach($del_files as $del_file){ // iterate files
-            $file_to_delete = str_replace($src,'',$del_file);
-            \Log::debug('Deleting: '.$file_to_delete);
-            try  {
-                Storage::disk('public')->delete($dst.$del_file);
-            } catch (\Exception $e) {
-                \Log::debug($e);
-            }
-        }
+        // foreach($del_files as $del_file){ // iterate files
+        //     $file_to_delete = str_replace($src,'',$del_file);
+        //     \Log::debug('Deleting: '.$file_to_delete);
+        //     try  {
+        //         Storage::disk('public')->delete($dst.$del_file);
+        //     } catch (\Exception $e) {
+        //         \Log::debug($e);
+        //     }
+        // }
 
 
         $add_files = glob($src."/*.*");

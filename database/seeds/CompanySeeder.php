@@ -19,17 +19,17 @@ class CompanySeeder extends Seeder
 
         $src = public_path('/img/demo/companies/');
         $dst = 'companies'.'/';
-        $del_files = Storage::files('companies/'.$dst);
+        $del_files = Storage::disk('public')->files('companies/'.$dst);
 
-        foreach($del_files as $del_file){ // iterate files
-            $file_to_delete = str_replace($src,'',$del_file);
-            \Log::debug('Deleting: '.$file_to_delete);
-            try  {
-                Storage::disk('public')->delete($dst.$del_file);
-            } catch (\Exception $e) {
-                \Log::debug($e);
-            }
-        }
+        // foreach($del_files as $del_file){ // iterate files
+        //     $file_to_delete = str_replace($src,'',$del_file);
+        //     \Log::debug('Deleting: '.$file_to_delete);
+        //     try  {
+        //         Storage::disk('public')->delete($dst.$del_file);
+        //     } catch (\Exception $e) {
+        //         \Log::debug($e);
+        //     }
+        // }
 
 
         $add_files = glob($src."/*.*");
